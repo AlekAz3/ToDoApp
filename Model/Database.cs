@@ -90,5 +90,52 @@ namespace Model
             return complete;
         }
 
+        public List<Note> NoteFromDB()
+        {
+            List<Note> notes = new List<Note>();
+
+            string command = $@"SELECT * FROM NOTES;";
+
+            SQLiteCommand cmd = new SQLiteCommand(command, _connection);
+            SQLiteDataReader sql = cmd.ExecuteReader();
+
+            if (sql.HasRows)
+            {
+                while (sql.Read())
+                {
+                    notes.Add(
+                        new Note(
+                            Convert.ToInt32(sql["ID_NOTE"]),
+                            sql["NAME "].ToString(),
+                            Convert.ToInt32(sql["ID_CATEGORY"]),
+                            Convert.ToBoolean(sql["COMPLETE "])));
+                }
+            }
+            return notes;
+        }
+
+        public List<Category> CategoryFromDB()
+        {
+            List<Category> categories = new List<Category>();
+
+            string command = $@"SELECT * FROM Category;";
+
+            SQLiteCommand cmd = new SQLiteCommand(command, _connection);
+            SQLiteDataReader sql = cmd.ExecuteReader();
+
+            if (sql.HasRows)
+            {
+                while (sql.Read())
+                {
+                    categories.Add(new Category(
+                        Convert.ToInt32(sql["ID_CATEGORY"]),
+                        sql["NAME"].ToString(),
+                        Convert.ToBoolean(sql["COMPLETE"])));
+                }
+            }
+            return categories;
+        }
+        
     }
+
 }

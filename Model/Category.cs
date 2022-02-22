@@ -10,11 +10,14 @@ namespace Model
 
         public string Name { get; set; }
 
-        public bool Do_Category { get; set; }
+        public bool Complete { get; set; }
 
-        public Category()
+        public Category(int Id, string name, bool complete)
         {
-
+            this .Id = Id;
+            this .Name = name;
+            this .Complete = complete;
         }
+
     }
 }
