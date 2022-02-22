@@ -1,4 +1,4 @@
-﻿namespace Veiw
+﻿namespace View
 {
     partial class MainForm
     {
@@ -57,6 +57,7 @@
             this.Category_List.Name = "Category_List";
             this.Category_List.Size = new System.Drawing.Size(171, 26);
             this.Category_List.TabIndex = 2;
+            this.Category_List.SelectedIndexChanged += new System.EventHandler(this.Category_List_SelectedIndexChanged);
             // 
             // add_note
             // 
