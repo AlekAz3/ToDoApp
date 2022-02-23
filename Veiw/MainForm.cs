@@ -16,8 +16,11 @@ namespace View
     {
         private string way = $@"C:\Users\{Environment.UserName}\AppData\Local\ToDoApp";
         private Database db;
+
         private List<Note> Note = new List<Note>();
         private List<Category> Category = new List<Category>();
+
+        private List<CheckBox> checkBoxes = new List<CheckBox>();
 
         public MainForm()
         {
@@ -50,27 +53,35 @@ namespace View
             db.CloseDB();
         }
 
-        private void debug_Click(object sender, EventArgs e)
-        {
-            
-        }
-
         private void Category_List_SelectedIndexChanged(object sender, EventArgs e)
         {
             
-            panel_note.Controls.Clear();
+            if (checkBoxes.Count!=0)
+            {
+                for (int i = 0; i < checkBoxes.Count; i++)
+                {
+                    Note[i].Complete = checkBoxes[i].Checked;
+                }
+            }
 
+            panel_note.Controls.Clear();
+            
             int y = 5;
-            List<CheckBox> checkBoxes = new List<CheckBox>();
+            int add = 25;
+
             for (int i = 0; i < Note.Count; i++)
             {
-                checkBoxes.Add(new CheckBox());
-                checkBoxes[i].Checked = Note[i].Complete;
-                checkBoxes[i].Text = Note[i].Name;
-                checkBoxes[i].AutoSize = true;
-                checkBoxes[i].Location = new Point(10, y);
-                panel_note.Controls.Add(checkBoxes[i]);
-                y += 25;
+                if (Note[i].Id_Category == Category_List.SelectedIndex + 1)
+                {
+                    checkBoxes.Add(new CheckBox());
+                    checkBoxes[i].Checked = Note[i].Complete;
+                    checkBoxes[i].Text = Note[i].Name;
+                    checkBoxes[i].AutoSize = true;
+                    checkBoxes[i].Location = new Point(10, y);
+                    checkBoxes[i].Name = $"checkBox{checkBoxes.Count}";
+                    panel_note.Controls.Add(checkBoxes[i]);
+                    y += add;
+                }
             }
         }
     }

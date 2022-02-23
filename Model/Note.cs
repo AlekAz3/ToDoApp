@@ -19,23 +19,6 @@ namespace Model
             this.Complete = complete;
             this.Id_Category = Id_category;
         }
-
-        public Note(int Id_Note, string Name, bool complete)
-        {
-            this.Id_note = Id_Note;
-            this.Name = Name;
-            this.Complete = complete;
-        }
-
-        public Note( string Name, int Id_category, bool complete)
-        {
-
-            this.Name = Name;
-            this.Complete = complete;
-            this.Id_Category = Id_category;
-        }
-
-
     }
 
 }

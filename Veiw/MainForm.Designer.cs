@@ -37,6 +37,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.panel_note = new System.Windows.Forms.Panel();
             this.debug = new System.Windows.Forms.Button();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // add_category
@@ -111,19 +112,29 @@
             // 
             // debug
             // 
-            this.debug.Location = new System.Drawing.Point(55, 238);
+            this.debug.Location = new System.Drawing.Point(70, 227);
             this.debug.Name = "debug";
-            this.debug.Size = new System.Drawing.Size(45, 22);
+            this.debug.Size = new System.Drawing.Size(57, 55);
             this.debug.TabIndex = 5;
             this.debug.Text = "debug";
             this.debug.UseVisualStyleBackColor = true;
-            this.debug.Click += new System.EventHandler(this.debug_Click);
+            // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Location = new System.Drawing.Point(70, 177);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(80, 17);
+            this.checkBox1.TabIndex = 6;
+            this.checkBox1.Text = "checkBox1";
+            this.checkBox1.UseVisualStyleBackColor = true;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(673, 389);
+            this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.debug);
             this.Controls.Add(this.panel_note);
             this.Controls.Add(this.label1);
@@ -151,6 +162,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Panel panel_note;
         private System.Windows.Forms.Button debug;
+        private System.Windows.Forms.CheckBox checkBox1;
     }
 }
 

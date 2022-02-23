@@ -59,6 +59,11 @@ namespace Model
             }
             return categories;
         }
+
+        public void InDB(List<Note> notes, List<Category> categories)
+        {
+            throw new Exception("no");
+        }
         
     }
 
