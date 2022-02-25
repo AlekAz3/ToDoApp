@@ -79,8 +79,6 @@ namespace View
                 Note[i].Complete = checkBoxes[i].Checked;   
                 db.SaveStateCheckBoxToDB(Note[i]);
             }
-            
-
         }
 
         private void debug_Click(object sender, EventArgs e)

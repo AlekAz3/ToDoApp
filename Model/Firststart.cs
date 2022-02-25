@@ -7,8 +7,8 @@ namespace Model
     public class Firststart
     {
         private readonly string way = $@"C:\Users\{Environment.UserName}\AppData\Local\ToDoApp";
-        private readonly string commandText1 = "CREATE TABLE category ( id_category INTEGER PRIMARY KEY AUTOINCREMENT, name VARCHAR (255), do_note BOOLEAN );";
-        private readonly string commandText2 = "CREATE TABLE Notes ( id_note INTEGER PRIMARY KEY AUTOINCREMENT, id_category INTEGER REFERENCES category (id_category), date_note DATETIME, check_note BOOLEAN );";
+        private readonly string commandText1 = "CREATE TABLE Category (ID_CATEGORY INTEGER PRIMARY KEY AUTOINCREMENT, NAME VARCHAR (255), COMPLETE BOOLEAN)";
+        private readonly string commandText2 = "CREATE TABLE NOTES (ID_NOTE INTEGER PRIMARY KEY AUTOINCREMENT, ID_CATEGORY INTEGER REFERENCES Category (ID_CATEGORY), \"NAME \" VARCHAR (255), DATE DATETIME, \"COMPLETE \" BOOLEAN)";
 
         public Firststart()
         {
