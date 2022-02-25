@@ -60,7 +60,7 @@ namespace Model
             return categories;
         }
 
-        public void SaveToDo(Note note)
+        public void SaveStateCheckBoxToDB(Note note)
         {
             string commandText = $"UPDATE NOTES SET \"COMPLETE \" = {note.Complete} WHERE ID_NOTE == {note.Id_note}";
             

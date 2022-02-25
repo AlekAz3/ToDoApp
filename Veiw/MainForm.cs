@@ -77,7 +77,7 @@ namespace View
             for (int i = 0; i < panel_note.Controls.Count; i++)
             {
                 Note[i].Complete = checkBoxes[i].Checked;   
-                db.SaveToDo(Note[i]);
+                db.SaveStateCheckBoxToDB(Note[i]);
             }
             
 
