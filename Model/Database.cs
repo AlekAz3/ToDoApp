@@ -60,11 +60,12 @@ namespace Model
             return categories;
         }
 
-        public void InDB(List<Note> notes, List<Category> categories)
+        public void SaveToDo(Note note)
         {
-            throw new Exception("no");
+            string commandText = $"UPDATE NOTES SET \"COMPLETE \" = {note.Complete} WHERE ID_NOTE == {note.Id_note}";
+            
+            using (SQLiteCommand cmdCreate = new SQLiteCommand(commandText, _connection))
+                cmdCreate.ExecuteNonQuery();
         }
-        
     }
-
 }

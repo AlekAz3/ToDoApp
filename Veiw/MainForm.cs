@@ -56,14 +56,6 @@ namespace View
         private void Category_List_SelectedIndexChanged(object sender, EventArgs e)
         {
             
-            if (checkBoxes.Count!=0)
-            {
-                for (int i = 0; i < checkBoxes.Count; i++)
-                {
-                    Note[i].Complete = checkBoxes[i].Checked;
-                }
-            }
-
             panel_note.Controls.Clear();
             
             int y = 5;
@@ -73,16 +65,32 @@ namespace View
             {
                 if (Note[i].Id_Category == Category_List.SelectedIndex + 1)
                 {
-                    checkBoxes.Add(new CheckBox());
-                    checkBoxes[i].Checked = Note[i].Complete;
-                    checkBoxes[i].Text = Note[i].Name;
-                    checkBoxes[i].AutoSize = true;
-                    checkBoxes[i].Location = new Point(10, y);
-                    checkBoxes[i].Name = $"checkBox{checkBoxes.Count}";
+                    checkBoxes.Add(new MyCheckBox(Note[i].Name, Note[i].Complete, y));
                     panel_note.Controls.Add(checkBoxes[i]);
                     y += add;
                 }
             }
+        }
+
+        private void Category_List_MouseClick(object sender, MouseEventArgs e)
+        {
+            for (int i = 0; i < panel_note.Controls.Count; i++)
+            {
+                Note[i].Complete = checkBoxes[i].Checked;   
+                db.SaveToDo(Note[i]);
+            }
+            
+
+        }
+
+        private void debug_Click(object sender, EventArgs e)
+        {
+            string a = "";
+            for (int i = 0; i < Note.Count; i++)
+            {
+                a += $"{Note[i].Name} {Note[i].Complete} {"\n"}";
+            }
+            MessageBox.Show(a, "");
         }
     }
 }

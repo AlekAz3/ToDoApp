@@ -14,10 +14,9 @@ namespace Model
 
         public Category(int Id, string name, bool complete)
         {
-            this .Id = Id;
-            this .Name = name;
-            this .Complete = complete;
+            this.Id = Id;
+            this.Name = name;
+            this.Complete = complete;
         }
-
     }
 }
