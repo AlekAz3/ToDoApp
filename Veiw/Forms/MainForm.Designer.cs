@@ -48,6 +48,7 @@
             this.add_category.TabIndex = 1;
             this.add_category.Text = "Добавить категорию";
             this.add_category.UseVisualStyleBackColor = true;
+            this.add_category.Click += new System.EventHandler(this.add_category_Click);
             // 
             // Category_List
             // 
@@ -112,9 +113,9 @@
             // 
             // debug
             // 
-            this.debug.Location = new System.Drawing.Point(71, 234);
+            this.debug.Location = new System.Drawing.Point(67, 225);
             this.debug.Name = "debug";
-            this.debug.Size = new System.Drawing.Size(57, 55);
+            this.debug.Size = new System.Drawing.Size(85, 72);
             this.debug.TabIndex = 5;
             this.debug.Text = "debug";
             this.debug.UseVisualStyleBackColor = true;

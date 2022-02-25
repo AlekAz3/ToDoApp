@@ -19,6 +19,7 @@ namespace View
 
         private List<Note> Note = new List<Note>();
         private List<Category> Category = new List<Category>();
+        private int CurrentCategory;
 
         private List<CheckBox> checkBoxes = new List<CheckBox>();
 
@@ -50,6 +51,7 @@ namespace View
         }
         private void Main_FormClosed(object sender, FormClosedEventArgs e)
         {
+            Category_List_MouseClick(Category_List, null);
             db.CloseDB();
         }
 
@@ -57,17 +59,16 @@ namespace View
         {
             
             panel_note.Controls.Clear();
-            
+            CurrentCategory = Category_List.SelectedIndex;
             int y = 5;
-            int add = 25;
 
             for (int i = 0; i < Note.Count; i++)
             {
-                if (Note[i].Id_Category == Category_List.SelectedIndex + 1)
+                if (Note[i].Id_Category == CurrentCategory + 1)
                 {
                     checkBoxes.Add(new MyCheckBox(Note[i].Name, Note[i].Complete, y));
                     panel_note.Controls.Add(checkBoxes[i]);
-                    y += add;
+                    y += 25;
                 }
             }
         }
@@ -83,12 +84,17 @@ namespace View
 
         private void debug_Click(object sender, EventArgs e)
         {
-            string a = "";
-            for (int i = 0; i < Note.Count; i++)
-            {
-                a += $"{Note[i].Name} {Note[i].Complete} {"\n"}";
-            }
-            MessageBox.Show(a, "");
+            //string a = "";
+            //for (int i = 0; i < Note.Count; i++)
+            //{
+            //    a += $"{Note[i].Name} {Note[i].Complete} {"\n"}";
+            //}
+            //MessageBox.Show(a, " ");
+        }
+
+        private void add_category_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

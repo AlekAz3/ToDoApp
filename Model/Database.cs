@@ -51,10 +51,12 @@ namespace Model
             {
                 while (sql.Read())
                 {
-                    categories.Add(new Category(
-                        Convert.ToInt32(sql["ID_CATEGORY"]),
-                        sql["NAME"].ToString(),
-                        Convert.ToBoolean(sql["COMPLETE"])));
+                    if (!Convert.ToBoolean(sql["COMPLETE"]))
+                    {
+                        categories.Add(new Category(
+                            Convert.ToInt32(sql["ID_CATEGORY"]),
+                            sql["NAME"].ToString()));
+                    }
                 }
             }
             return categories;
@@ -63,9 +65,10 @@ namespace Model
         public void SaveStateCheckBoxToDB(Note note)
         {
             string commandText = $"UPDATE NOTES SET \"COMPLETE \" = {note.Complete} WHERE ID_NOTE == {note.Id_note}";
-            
+
             using (SQLiteCommand cmdCreate = new SQLiteCommand(commandText, _connection))
                 cmdCreate.ExecuteNonQuery();
+
         }
     }
 }
