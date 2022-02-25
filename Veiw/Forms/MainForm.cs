@@ -91,10 +91,5 @@ namespace View
             //}
             //MessageBox.Show(a, " ");
         }
-
-        private void add_category_Click(object sender, EventArgs e)
-        {
-
-        }
     }
 }

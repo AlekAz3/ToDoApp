@@ -48,7 +48,6 @@
             this.add_category.TabIndex = 1;
             this.add_category.Text = "Добавить категорию";
             this.add_category.UseVisualStyleBackColor = true;
-            this.add_category.Click += new System.EventHandler(this.add_category_Click);
             // 
             // Category_List
             // 
