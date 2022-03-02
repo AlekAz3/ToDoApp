@@ -70,5 +70,13 @@ namespace Model
                 cmdCreate.ExecuteNonQuery();
 
         }
+
+        public void AddCategotyToDB(Category category)
+        {
+            string commandText = $"INSERT INTO Category (NAME, COMPLETE) VALUES(\"{category.Name}\", FALSE)";
+
+            using (SQLiteCommand cmdCreate = new SQLiteCommand(commandText, _connection))
+                cmdCreate.ExecuteNonQuery();
+        }
     }
 }

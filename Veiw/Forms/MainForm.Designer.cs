@@ -36,7 +36,6 @@
             this.archive_btn = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.panel_note = new System.Windows.Forms.Panel();
-            this.debug = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // add_category
@@ -48,6 +47,7 @@
             this.add_category.TabIndex = 1;
             this.add_category.Text = "Добавить категорию";
             this.add_category.UseVisualStyleBackColor = true;
+            this.add_category.Click += new System.EventHandler(this.add_category_Click);
             // 
             // Category_List
             // 
@@ -110,22 +110,11 @@
             this.panel_note.Size = new System.Drawing.Size(448, 356);
             this.panel_note.TabIndex = 4;
             // 
-            // debug
-            // 
-            this.debug.Location = new System.Drawing.Point(67, 225);
-            this.debug.Name = "debug";
-            this.debug.Size = new System.Drawing.Size(85, 72);
-            this.debug.TabIndex = 5;
-            this.debug.Text = "debug";
-            this.debug.UseVisualStyleBackColor = true;
-            this.debug.Click += new System.EventHandler(this.debug_Click);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(673, 389);
-            this.Controls.Add(this.debug);
             this.Controls.Add(this.panel_note);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.Category_List);
@@ -133,7 +122,9 @@
             this.Controls.Add(this.edit_btn);
             this.Controls.Add(this.add_note);
             this.Controls.Add(this.add_category);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
             this.Name = "MainForm";
             this.Text = "Заметки ";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Main_FormClosed);
@@ -151,7 +142,6 @@
         private System.Windows.Forms.Button archive_btn;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Panel panel_note;
-        private System.Windows.Forms.Button debug;
     }
 }
 
