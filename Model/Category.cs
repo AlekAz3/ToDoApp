@@ -10,8 +10,6 @@ namespace Model
 
         public string Name { get; set; }
 
-        public bool Complete { get; set; }
-
         public Category(int Id, string name)
         {
             this.Id = Id;

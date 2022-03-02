@@ -88,16 +88,6 @@ namespace View
             }
         }
 
-        private void debug_Click(object sender, EventArgs e)
-        {
-            //string a = "";
-            //for (int i = 0; i < Note.Count; i++)
-            //{
-            //    a += $"{Note[i].Name} {Note[i].Complete} {"\n"}";
-            //}
-            //MessageBox.Show(a, " ");
-        }
-
         private void add_category_Click(object sender, EventArgs e)
         {
             AddLabel = new Label();
@@ -105,9 +95,7 @@ namespace View
             this.AddLabel.AutoSize = true;
             this.AddLabel.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(204)));
             this.AddLabel.Location = new Point(11, 194);
-            this.AddLabel.Name = "AddLabel";
             this.AddLabel.Size = new Size(165, 20);
-            this.AddLabel.TabIndex = 5;
             this.AddLabel.Text = "Название категории";
             this.Controls.Add(this.AddLabel);
 
@@ -115,18 +103,14 @@ namespace View
             TextBox = new TextBox();
             this.TextBox.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(204)));
             this.TextBox.Location = new Point(15, 217);
-            this.TextBox.Name = "AddTB";
             this.TextBox.Size = new Size(171, 26);
-            this.TextBox.TabIndex = 6;
             this.Controls.Add(this.TextBox);
 
 
             AddButton = new Button();
             this.AddButton.Font = new Font("Microsoft Sans Serif", 11.25F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(204)));
             this.AddButton.Location = new Point(15, 249);
-            this.AddButton.Name = "Add_btn";
             this.AddButton.Size = new Size(171, 30);
-            this.AddButton.TabIndex = 1;
             this.AddButton.Text = "Добавить";
             this.AddButton.UseVisualStyleBackColor = true;
             this.AddButton.Click += new EventHandler(this.WriteNewCategoryClick);
@@ -137,9 +121,13 @@ namespace View
         private void WriteNewCategoryClick(object sender, EventArgs e)
         {
             string category = this.TextBox.Text;
+
             Category.Add(new Category(Category.Count - 1, category));
             db.AddCategotyToDB(new Category(Category.Count - 1, category));
             Category_List.Items.Add(Category[Category.Count - 1].Name);
+
+            MessageBox.Show("Категория создана", "Инфо", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            Category_List.SelectedIndex = Category_List.Items.Count-1;
 
             AddButton.Dispose();
             TextBox.Dispose();
