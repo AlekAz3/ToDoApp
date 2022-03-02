@@ -69,6 +69,7 @@
             this.add_note.TabIndex = 1;
             this.add_note.Text = "Добавить пункт";
             this.add_note.UseVisualStyleBackColor = true;
+            this.add_note.Click += new System.EventHandler(this.add_note_Click);
             // 
             // edit_btn
             // 

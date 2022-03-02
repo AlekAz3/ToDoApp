@@ -22,13 +22,20 @@ namespace View
         private int CurrentCategory;
 
         private List<CheckBox> checkBoxes = new List<CheckBox>();
-
+        
         private int indent;
         private readonly int step = 25;
 
-        Label AddLabel;
-        Button AddButton;
-        TextBox TextBox;
+        private Label AddLabel = new Label();
+        private Button AddButton = new Button();
+        private TextBox AddTextBox = new TextBox();
+
+        private Label AddLabelNote = new Label();
+        private Button AddButtonNote = new Button();
+        private Button DestroyButtonNote = new Button();
+        private TextBox AddTextBoxNote = new TextBox();
+
+        private bool Add_Flag = false;
 
         public MainForm()
         {
@@ -56,6 +63,7 @@ namespace View
                 
             }
         }
+
         private void Main_FormClosed(object sender, FormClosedEventArgs e)
         {
             Category_List_MouseClick(Category_List, null);
@@ -90,48 +98,108 @@ namespace View
 
         private void add_category_Click(object sender, EventArgs e)
         {
-            AddLabel = new Label();
-            
-            this.AddLabel.AutoSize = true;
-            this.AddLabel.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(204)));
-            this.AddLabel.Location = new Point(11, 194);
-            this.AddLabel.Size = new Size(165, 20);
-            this.AddLabel.Text = "Название категории";
-            this.Controls.Add(this.AddLabel);
+            if (!Add_Flag)
+            {
 
+                this.AddLabel.AutoSize = true;
+                this.AddLabel.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(204)));
+                this.AddLabel.Location = new Point(11, 194);
+                this.AddLabel.Size = new Size(165, 20);
+                this.AddLabel.Text = "Название категории";
+                this.Controls.Add(this.AddLabel);
 
-            TextBox = new TextBox();
-            this.TextBox.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(204)));
-            this.TextBox.Location = new Point(15, 217);
-            this.TextBox.Size = new Size(171, 26);
-            this.Controls.Add(this.TextBox);
+                this.AddTextBox.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(204)));
+                this.AddTextBox.Location = new Point(15, 217);
+                this.AddTextBox.Size = new Size(171, 26);
+                this.Controls.Add(this.AddTextBox);
 
-
-            AddButton = new Button();
-            this.AddButton.Font = new Font("Microsoft Sans Serif", 11.25F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(204)));
-            this.AddButton.Location = new Point(15, 249);
-            this.AddButton.Size = new Size(171, 30);
-            this.AddButton.Text = "Добавить";
-            this.AddButton.UseVisualStyleBackColor = true;
-            this.AddButton.Click += new EventHandler(this.WriteNewCategoryClick);
-            this.Controls.Add(this.AddButton);
-
+                this.AddButton.Font = new Font("Microsoft Sans Serif", 11.25F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(204)));
+                this.AddButton.Location = new Point(15, 249);
+                this.AddButton.Size = new Size(171, 30);
+                this.AddButton.Text = "Добавить";
+                this.AddButton.UseVisualStyleBackColor = true;
+                this.AddButton.Click += new EventHandler(this.WriteNewCategoryClick);
+                this.Controls.Add(this.AddButton);
+                Add_Flag = true;
+            }
         }
 
         private void WriteNewCategoryClick(object sender, EventArgs e)
         {
-            string category = this.TextBox.Text;
+            string category = this.AddTextBox.Text;
+            if (category == "" || category == " ")
+            {
+                MessageBox.Show("Поле не должно быть пустым","Ошибка",MessageBoxButtons.OK,MessageBoxIcon.Error);
+            }
+            else
+            {
+                Category.Add(new Category(Category.Count - 1, category));
+                db.AddCategotyToDB(new Category(Category.Count - 1, category));
+                Category_List.Items.Add(Category[Category.Count - 1].Name);
 
-            Category.Add(new Category(Category.Count - 1, category));
-            db.AddCategotyToDB(new Category(Category.Count - 1, category));
-            Category_List.Items.Add(Category[Category.Count - 1].Name);
+                MessageBox.Show("Категория создана", "Инфо", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                Category_List.SelectedIndex = Category_List.Items.Count - 1;
 
-            MessageBox.Show("Категория создана", "Инфо", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            Category_List.SelectedIndex = Category_List.Items.Count-1;
-
-            AddButton.Dispose();
-            TextBox.Dispose();
-            AddLabel.Dispose();
+                AddButton.Dispose();
+                AddTextBox.Dispose();
+                AddLabel.Dispose();
+                Add_Flag = false;
+            }
         }
+
+        private void add_note_Click(object sender, EventArgs e)
+        {
+            if (!Add_Flag)
+            {
+
+
+                this.AddLabelNote.AutoSize = true;
+                this.AddLabelNote.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(204)));
+                this.AddLabelNote.Location = new Point(15, 194);
+                this.AddLabelNote.Size = new Size(138, 20);
+                this.AddLabelNote.Text = "Название пункта";
+
+
+                this.AddTextBoxNote.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(204)));
+                this.AddTextBoxNote.Location = new Point(19, 218);
+                this.AddTextBoxNote.Size = new Size(167, 26);
+
+
+                this.AddButtonNote.Font = new Font("Microsoft Sans Serif", 11.25F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(204)));
+                this.AddButtonNote.Location = new Point(15, 250);
+                this.AddButtonNote.Size = new Size(85, 30);
+                this.AddButtonNote.Text = "Добавить";
+                this.AddButtonNote.UseVisualStyleBackColor = true;
+                this.AddButtonNote.Click += new EventHandler(this.AddNoteButton_Click);
+
+                this.DestroyButtonNote.Font = new Font("Microsoft Sans Serif", 11.25F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(204)));
+                this.DestroyButtonNote.Location = new Point(106, 250);
+                this.DestroyButtonNote.Size = new Size(80, 30);
+                this.DestroyButtonNote.Text = "Готово";
+                this.DestroyButtonNote.UseVisualStyleBackColor = true;
+                this.DestroyButtonNote.Click += new EventHandler(this.DestroyButton_Click);
+
+                this.Controls.Add(AddLabelNote);
+                this.Controls.Add(AddTextBoxNote);
+                this.Controls.Add(AddButtonNote);
+                this.Controls.Add(DestroyButtonNote);
+                Add_Flag = true;
+            }
+        }
+
+        private void DestroyButton_Click(object sender, EventArgs e)
+        {
+            AddLabelNote.Dispose();
+            AddTextBoxNote.Dispose();
+            AddButtonNote.Dispose();
+            DestroyButtonNote.Dispose();
+            Add_Flag = false;
+        }
+
+        private void AddNoteButton_Click(object sender, EventArgs e)
+        {
+
+        }
+
     }
 }
