@@ -11,9 +11,9 @@ namespace Model
         private SQLiteConnection _connection = new SQLiteConnection($@"Data Source={way}\todoapp.db;");
 
         public Database() => _connection.Open();
-        
+
         public void CloseDB() => _connection.Close();
-  
+
         public List<Note> NoteFromDB()
         {
             List<Note> notes = new List<Note>();
@@ -64,16 +64,26 @@ namespace Model
 
         public void SaveStateCheckBoxToDB(Note note)
         {
-            string commandText = $"UPDATE NOTES SET \"COMPLETE \" = {note.Complete} WHERE ID_NOTE == {note.Id_note}";
+            if (_connection.State == System.Data.ConnectionState.Open)
+            {
+                string commandText = $"UPDATE NOTES SET \"COMPLETE \" = {note.Complete} WHERE ID_NOTE == {note.Id_note}";
 
-            using (SQLiteCommand cmdCreate = new SQLiteCommand(commandText, _connection))
-                cmdCreate.ExecuteNonQuery();
-
+                using (SQLiteCommand cmdCreate = new SQLiteCommand(commandText, _connection))
+                    cmdCreate.ExecuteNonQuery();
+            }
         }
 
         public void AddCategotyToDB(Category category)
         {
             string commandText = $"INSERT INTO Category (NAME, COMPLETE) VALUES(\"{category.Name}\", FALSE)";
+
+            using (SQLiteCommand cmdCreate = new SQLiteCommand(commandText, _connection))
+                cmdCreate.ExecuteNonQuery();
+        }
+
+        public void AddNoteToDB(Note note)
+        {
+            string commandText = $"INSERT INTO Notes (ID_CATEGORY, \"NAME \", \"DATE\" , \"COMPLETE \") VALUES(\"{note.Id_Category}\", \"{note.Name}\", \"{DateTime.Now}\", false)";
 
             using (SQLiteCommand cmdCreate = new SQLiteCommand(commandText, _connection))
                 cmdCreate.ExecuteNonQuery();

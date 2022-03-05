@@ -26,14 +26,14 @@ namespace View
         private int indent;
         private readonly int step = 25;
 
-        private Label AddLabel = new Label();
-        private Button AddButton = new Button();
-        private TextBox AddTextBox = new TextBox();
+        private Label AddLabel;
+        private Button AddButton;
+        private TextBox AddTextBox;
 
-        private Label AddLabelNote = new Label();
-        private Button AddButtonNote = new Button();
-        private Button DestroyButtonNote = new Button();
-        private TextBox AddTextBoxNote = new TextBox();
+        private Label AddLabelNote;
+        private Button AddButtonNote;
+        private Button DestroyButtonNote;
+        private TextBox AddTextBoxNote;
 
         private bool Add_Flag = false;
 
@@ -66,22 +66,25 @@ namespace View
 
         private void Main_FormClosed(object sender, FormClosedEventArgs e)
         {
-            Category_List_MouseClick(Category_List, null);
-            db.CloseDB();
+            if (db != null)
+            {
+                Category_List_MouseClick(Category_List, null);
+                db.CloseDB();
+            }
         }
 
         private void Category_List_SelectedIndexChanged(object sender, EventArgs e)
         {
             panel_note.Controls.Clear();
             CurrentCategory = Category_List.SelectedIndex;
+            checkBoxes.Clear();
             indent = 5;
-
             for (int i = 0; i < Note.Count; i++)
             {
                 if (Note[i].Id_Category == CurrentCategory + 1)
-                {
+                {   
                     checkBoxes.Add(new MyCheckBox(Note[i].Name, Note[i].Complete, indent));
-                    panel_note.Controls.Add(checkBoxes[i]);
+                    panel_note.Controls.Add(checkBoxes[checkBoxes.Count-1]);
                     indent += step;
                 }
             }
@@ -100,7 +103,7 @@ namespace View
         {
             if (!Add_Flag)
             {
-
+                AddLabel = new Label();
                 this.AddLabel.AutoSize = true;
                 this.AddLabel.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(204)));
                 this.AddLabel.Location = new Point(11, 194);
@@ -108,11 +111,13 @@ namespace View
                 this.AddLabel.Text = "Название категории";
                 this.Controls.Add(this.AddLabel);
 
+                AddTextBox = new TextBox();
                 this.AddTextBox.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(204)));
                 this.AddTextBox.Location = new Point(15, 217);
                 this.AddTextBox.Size = new Size(171, 26);
                 this.Controls.Add(this.AddTextBox);
 
+                AddButton = new Button();
                 this.AddButton.Font = new Font("Microsoft Sans Serif", 11.25F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(204)));
                 this.AddButton.Location = new Point(15, 249);
                 this.AddButton.Size = new Size(171, 30);
@@ -122,15 +127,23 @@ namespace View
                 this.Controls.Add(this.AddButton);
                 Add_Flag = true;
             }
+            else
+            {
+                if (AddLabel != null)
+                {
+                    AddLabel.Dispose();
+                    AddTextBox.Dispose();
+                    this.AddButton.Dispose();
+                    Add_Flag = false;
+                }
+            }
         }
 
         private void WriteNewCategoryClick(object sender, EventArgs e)
         {
             string category = this.AddTextBox.Text;
             if (category == "" || category == " ")
-            {
                 MessageBox.Show("Поле не должно быть пустым","Ошибка",MessageBoxButtons.OK,MessageBoxIcon.Error);
-            }
             else
             {
                 Category.Add(new Category(Category.Count - 1, category));
@@ -151,7 +164,7 @@ namespace View
         {
             if (!Add_Flag)
             {
-
+                AddLabelNote = new Label();
 
                 this.AddLabelNote.AutoSize = true;
                 this.AddLabelNote.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(204)));
@@ -159,12 +172,12 @@ namespace View
                 this.AddLabelNote.Size = new Size(138, 20);
                 this.AddLabelNote.Text = "Название пункта";
 
-
+                AddTextBoxNote = new TextBox();
                 this.AddTextBoxNote.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(204)));
                 this.AddTextBoxNote.Location = new Point(19, 218);
                 this.AddTextBoxNote.Size = new Size(167, 26);
 
-
+                AddButtonNote = new Button();
                 this.AddButtonNote.Font = new Font("Microsoft Sans Serif", 11.25F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(204)));
                 this.AddButtonNote.Location = new Point(15, 250);
                 this.AddButtonNote.Size = new Size(85, 30);
@@ -172,6 +185,7 @@ namespace View
                 this.AddButtonNote.UseVisualStyleBackColor = true;
                 this.AddButtonNote.Click += new EventHandler(this.AddNoteButton_Click);
 
+                DestroyButtonNote = new Button();
                 this.DestroyButtonNote.Font = new Font("Microsoft Sans Serif", 11.25F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(204)));
                 this.DestroyButtonNote.Location = new Point(106, 250);
                 this.DestroyButtonNote.Size = new Size(80, 30);
@@ -184,6 +198,17 @@ namespace View
                 this.Controls.Add(AddButtonNote);
                 this.Controls.Add(DestroyButtonNote);
                 Add_Flag = true;
+            }
+            else
+            {
+                if (AddLabelNote !=null)
+                {
+                     AddLabelNote.Dispose();
+                     AddButtonNote.Dispose();
+                     DestroyButtonNote.Dispose();
+                     AddTextBoxNote.Dispose();
+                     Add_Flag = false;
+                }
             }
         }
 
@@ -198,8 +223,70 @@ namespace View
 
         private void AddNoteButton_Click(object sender, EventArgs e)
         {
+            if (Category_List.SelectedIndex == -1)
+                MessageBox.Show($"Пошел нахуй реально заебал{"\n"}(Не выбрана категория)");
 
+            else
+            {
+                if (AddTextBoxNote.Text == "" || AddTextBoxNote.Text == " ")
+                    MessageBox.Show($"Это поле не может быть пустым");
+                else
+                {
+                    Note.Add(new Note(Note.Count, AddTextBoxNote.Text, CurrentCategory+1, false));
+                    db.AddNoteToDB(Note[Note.Count - 1]);
+                    AddTextBoxNote.Text = "";
+                }
+            }
         }
 
+        private void DellAllDate_Click(object sender, EventArgs e)
+        {
+            var result = MessageBox.Show("Вы уверены", "Инфо",
+                                 MessageBoxButtons.YesNo,
+                                 MessageBoxIcon.Question);
+
+            if (result == DialogResult.Yes)
+            {
+                db.CloseDB();
+                File.Delete($@"{way}\todoapp.db");
+                Directory.Delete(way);
+                Application.Exit();
+            }
+        }
+
+        private void Debug_click(object sender, EventArgs e)
+        {
+            //if (AddLabel != null)
+            //    AddLabel.Dispose();
+
+            //if (AddButton != null)
+            //    AddButton.Dispose();
+
+            //if (AddTextBox != null)
+            //    AddTextBox.Dispose();
+
+            //if (AddLabelNote != null)
+            //    AddLabelNote.Dispose();
+
+            //if (AddButtonNote != null)
+            //    AddButtonNote.Dispose();
+
+            //if (AddTextBoxNote != null)
+            //    AddTextBoxNote.Dispose();
+
+            //if (DestroyButtonNote != null)
+            //    DestroyButtonNote.Dispose();
+            MessageBox.Show("Закрой прогу и открой обратно");
+        }
+
+        private void ArchiveButton_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Не готово");
+        }
+
+        private void EditButton_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Не готово");
+        }
     }
 }
