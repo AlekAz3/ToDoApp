@@ -267,8 +267,10 @@ namespace Veiw.Forms
             Category_List.Items.Clear();
             Note.Clear();
             Category.Clear();
+
             Note = db.NoteFromDB();
             Category = db.CategoryFromDB();
+
             for (int index = 0; index < Category.Count; ++index)
                 Category_List.Items.Add(Category[index].Name);
 
