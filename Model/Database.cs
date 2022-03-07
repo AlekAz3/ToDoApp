@@ -8,6 +8,7 @@ namespace Model
     public class Database
     {
         private static string way = $@"C:\Users\{Environment.UserName}\AppData\Local\ToDoApp";
+
         private SQLiteConnection _connection = new SQLiteConnection($@"Data Source={way}\todoapp.db;");
 
         public Database() => _connection.Open();
@@ -18,7 +19,7 @@ namespace Model
         {
             List<Note> notes = new List<Note>();
 
-            string command = $@"SELECT * FROM NOTES;";
+            string command = $@"SELECT * FROM NOTES, Category WHERE NOTES.ID_CATEGORY == Category.ID_CATEGORY";
 
             SQLiteCommand cmd = new SQLiteCommand(command, _connection);
             SQLiteDataReader sql = cmd.ExecuteReader();
@@ -31,8 +32,9 @@ namespace Model
                         new Note(
                             Convert.ToInt32(sql["ID_NOTE"]),
                             sql["NAME "].ToString(),
+                            (sql["NAME_CATEGORY"].ToString()),
                             Convert.ToInt32(sql["ID_CATEGORY"]),
-                            Convert.ToBoolean(sql["COMPLETE "])));
+                            Convert.ToBoolean(sql["COMPLETE "]))) ;
                 }
             }
             return notes;
@@ -55,7 +57,7 @@ namespace Model
                     {
                         categories.Add(new Category(
                             Convert.ToInt32(sql["ID_CATEGORY"]),
-                            sql["NAME"].ToString()));
+                            sql["NAME_CATEGORY"].ToString()));
                     }
                 }
             }
@@ -75,7 +77,7 @@ namespace Model
 
         public void AddCategotyToDB(Category category)
         {
-            string commandText = $"INSERT INTO Category (NAME, COMPLETE) VALUES(\"{category.Name}\", FALSE)";
+            string commandText = $"INSERT INTO Category (NAME_CATEGORY, COMPLETE) VALUES(\"{category.Name}\", FALSE)";
 
             using (SQLiteCommand cmdCreate = new SQLiteCommand(commandText, _connection))
                 cmdCreate.ExecuteNonQuery();
@@ -88,5 +90,55 @@ namespace Model
             using (SQLiteCommand cmdCreate = new SQLiteCommand(commandText, _connection))
                 cmdCreate.ExecuteNonQuery();
         }
+
+        public void DellCategory(string name)
+        {
+            string commandText2 = $"DELETE FROM Category WHERE NAME_CATEGORY = \"{name}\"";
+
+            using (SQLiteCommand cmdCreate = new SQLiteCommand(commandText2, _connection))
+                cmdCreate.ExecuteNonQuery();
+        }
+
+        public int GetIDCategoryFromName(string Name)
+        {
+            int id = 0;
+            string command = $"SELECT ID_CATEGORY FROM Category WHERE NAME_CATEGORY == \"{Name}\"";
+
+            SQLiteCommand cmd = new SQLiteCommand(command, _connection);
+            SQLiteDataReader sql = cmd.ExecuteReader();
+
+            if (sql.HasRows)
+            {
+                while(sql.Read())
+                {
+                    id = Convert.ToInt32(sql["ID_CATEGORY"]);
+                }
+            }
+            return id;
+            
+        }
+
+        public void ArchiveCategory(string name)
+        {
+            string commandText = $"UPDATE Category SET COMPLETE = TRUE WHERE NAME_CATEGORY == \"{name}\"";
+            
+            using (SQLiteCommand cmdCreate = new SQLiteCommand(commandText, _connection))
+                cmdCreate.ExecuteNonQuery();
+        }
+
+        public bool CheckCategoryName(string Name)
+        {
+            
+            string command = $"SELECT NAME_CATEGORY FROM Category WHERE NAME_CATEGORY == \"{Name}\"";
+
+            SQLiteCommand cmd = new SQLiteCommand(command, _connection);
+            SQLiteDataReader sql = cmd.ExecuteReader();
+
+            if (sql.HasRows)
+                return false;
+            else
+                return true;
+        }
+
     }
 }

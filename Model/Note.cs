@@ -8,17 +8,18 @@ namespace Model
     {
         public int Id_note { get; set; }
         public string Name { get; set; }
-        public int Id_Category { get; set; }    
+        public int Id_Category { get; set; }  
+        public string Name_Category { get; set; }
         public bool Complete { get; set; }
         public string Created { get; set; }
 
-        public Note(int Id_Note, string Name, int Id_category, bool complete)
+        public Note(int Id_Note, string Name, string Name_Category,int Id_Category, bool complete)
         {
             this.Id_note = Id_Note;
             this.Name = Name;
             this.Complete = complete;
-            this.Id_Category = Id_category;
+            this.Name_Category = Name_Category;
+            this.Id_Category = Id_Category;
         }
     }
-
 }
