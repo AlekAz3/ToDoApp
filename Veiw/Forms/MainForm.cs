@@ -59,7 +59,7 @@ namespace Veiw.Forms
             }
         }
 
-        private void Category_List_SelectedIndexChanged(object sender, EventArgs e)
+        public void Category_List_SelectedIndexChanged(object sender, EventArgs e)
         {
             panel_note.Controls.Clear();
             CurrentCategory = Category_List.SelectedIndex;
@@ -78,7 +78,7 @@ namespace Veiw.Forms
             }
         }
 
-        private void Category_List_MouseClick(object sender, MouseEventArgs e)
+        public void Category_List_MouseClick(object sender, MouseEventArgs e)
         {
             for (int i = 0; i < panel_note.Controls.Count; i++)
             {
@@ -273,8 +273,11 @@ namespace Veiw.Forms
 
             for (int index = 0; index < Category.Count; ++index)
                 Category_List.Items.Add(Category[index].Name);
+        }
 
-            Category_List.SelectedIndex = 0;
+        private void ShowArchiveButton_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
