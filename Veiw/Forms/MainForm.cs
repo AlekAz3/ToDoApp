@@ -209,13 +209,9 @@ namespace Veiw.Forms
         private void AddNoteButton_Click(object sender, EventArgs e)
         {
             if (Category_List.SelectedIndex == -1)
-            {
-                MessageBox.Show("Пошел нахуй реально заебал\n(Не выбрана категория)");
-            }
+                MessageBox.Show("Не выбрана категория", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             else if (AddTextBoxNote.Text == "" || AddTextBoxNote.Text == " ")
-            {
-                MessageBox.Show("Это поле не может быть пустым");
-            }
+                MessageBox.Show("Это поле не может быть пустым", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             else
             {
                 Note.Add(new Note(Note.Count, AddTextBoxNote.Text, curCategory, db.GetIDCategoryFromName(curCategory), false));
@@ -242,25 +238,33 @@ namespace Veiw.Forms
             MessageBox.Show("Закрой прогу и открой обратно");
         }
 
-        private void EditButton_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show("Не готово");
-        }
-
         private void DellCurrentCategory(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Вы уверены, это нельзя обратить", "Точно?", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) != DialogResult.OK)
-                return;
-            db.DellCategory(curCategory);
-            ReLoadCategoryList();
+            if (Category_List.SelectedIndex != -1)
+            {
+                if (MessageBox.Show("Вы уверены, это нельзя обратить", "Точно?", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) != DialogResult.OK)
+                    return;
+                db.DellCategory(curCategory);
+                ReLoadCategoryList();
+            }
+            else
+                MessageBox.Show("Не выбрана категория", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+
+
         }
 
         private void CategoryToArchive_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Вы уверены, это нельзя будет обратить", "Точно?", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) != DialogResult.OK)
-                return;
-            db.ArchiveCategory(curCategory);
-            ReLoadCategoryList();
+            if (Category_List.SelectedIndex != -1)
+            {
+                if (MessageBox.Show("Вы уверены, это нельзя будет обратить", "Точно?", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) != DialogResult.OK)
+                    return;
+                db.ArchiveCategory(curCategory);
+                ReLoadCategoryList();
+            }
+            else
+                MessageBox.Show("Не выбрана категория", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
         private void ReLoadCategoryList()
@@ -279,7 +283,7 @@ namespace Veiw.Forms
                 Category_List.SelectedIndex = 0;
             else
                 panel_note.Controls.Clear();
-            
+
         }
 
         private void ShowArchiveButton_Click(object sender, EventArgs e)
