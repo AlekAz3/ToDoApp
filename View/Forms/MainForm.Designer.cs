@@ -113,21 +113,21 @@ namespace Veiw.Forms
             // удалитьВсеДанныеToolStripMenuItem
             // 
             this.удалитьВсеДанныеToolStripMenuItem.Name = "удалитьВсеДанныеToolStripMenuItem";
-            this.удалитьВсеДанныеToolStripMenuItem.Size = new System.Drawing.Size(208, 22);
-            this.удалитьВсеДанныеToolStripMenuItem.Text = "Категория выполнена";
+            this.удалитьВсеДанныеToolStripMenuItem.Size = new System.Drawing.Size(258, 22);
+            this.удалитьВсеДанныеToolStripMenuItem.Text = "Поместить категорию в Архив";
             this.удалитьВсеДанныеToolStripMenuItem.Click += new System.EventHandler(this.CategoryToArchive_Click);
             // 
             // удалитьВсеДанныеToolStripMenuItem1
             // 
             this.удалитьВсеДанныеToolStripMenuItem1.Name = "удалитьВсеДанныеToolStripMenuItem1";
-            this.удалитьВсеДанныеToolStripMenuItem1.Size = new System.Drawing.Size(208, 22);
+            this.удалитьВсеДанныеToolStripMenuItem1.Size = new System.Drawing.Size(258, 22);
             this.удалитьВсеДанныеToolStripMenuItem1.Text = "Удалить все данные";
             this.удалитьВсеДанныеToolStripMenuItem1.Click += new System.EventHandler(this.DellAllDate_Click);
             // 
             // удалитьКатегориюToolStripMenuItem
             // 
             this.удалитьКатегориюToolStripMenuItem.Name = "удалитьКатегориюToolStripMenuItem";
-            this.удалитьКатегориюToolStripMenuItem.Size = new System.Drawing.Size(208, 22);
+            this.удалитьКатегориюToolStripMenuItem.Size = new System.Drawing.Size(258, 22);
             this.удалитьКатегориюToolStripMenuItem.Text = "Удалить категорию";
             this.удалитьКатегориюToolStripMenuItem.Click += new System.EventHandler(this.DellCurrentCategory);
             // 
