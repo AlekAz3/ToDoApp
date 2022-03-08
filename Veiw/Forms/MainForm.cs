@@ -14,6 +14,7 @@ namespace Veiw.Forms
         private Database db;
         private List<Note> Note = new List<Note>();
         private List<Category> Category = new List<Category>();
+        private List<Category> ArchiveCategory = new List<Category>();
 
         private int CurrentCategory;
         private string curCategory;
@@ -273,11 +274,24 @@ namespace Veiw.Forms
 
             for (int index = 0; index < Category.Count; ++index)
                 Category_List.Items.Add(Category[index].Name);
+
+            if (Category_List.Items.Count != 0)
+                Category_List.SelectedIndex = 0;
+            else
+                panel_note.Controls.Clear();
+            
         }
 
         private void ShowArchiveButton_Click(object sender, EventArgs e)
         {
+            ArchiveCategory = db.ArchiveCategoryFromDB();
+            string messege = "Выполненные категории: \n";
+            for (int i = 0; i < ArchiveCategory.Count; i++)
+            {
+                messege += $"{ArchiveCategory[i].Name}{"\n"}";
+            }
 
+            MessageBox.Show(messege, "Архив");
         }
     }
 }

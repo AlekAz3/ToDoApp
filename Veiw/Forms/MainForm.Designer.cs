@@ -34,7 +34,6 @@ namespace Veiw.Forms
             this.Category_List = new System.Windows.Forms.ComboBox();
             this.add_note = new System.Windows.Forms.Button();
             this.add_category = new System.Windows.Forms.Button();
-            this.edit_btn = new System.Windows.Forms.Button();
             this.panel_note = new System.Windows.Forms.Panel();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.программаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -79,17 +78,6 @@ namespace Veiw.Forms
             this.add_category.Text = "Добавить запись";
             this.add_category.UseVisualStyleBackColor = true;
             this.add_category.Click += new System.EventHandler(this.add_note_Click);
-            // 
-            // edit_btn
-            // 
-            this.edit_btn.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.edit_btn.Location = new System.Drawing.Point(12, 156);
-            this.edit_btn.Name = "edit_btn";
-            this.edit_btn.Size = new System.Drawing.Size(171, 30);
-            this.edit_btn.TabIndex = 1;
-            this.edit_btn.Text = "Редактировать";
-            this.edit_btn.UseVisualStyleBackColor = true;
-            this.edit_btn.Click += new System.EventHandler(this.EditButton_Click);
             // 
             // panel_note
             // 
@@ -172,7 +160,6 @@ namespace Veiw.Forms
             this.Controls.Add(this.label1);
             this.Controls.Add(this.panel_note);
             this.Controls.Add(this.Archive_Btn);
-            this.Controls.Add(this.edit_btn);
             this.Controls.Add(this.add_category);
             this.Controls.Add(this.add_note);
             this.Controls.Add(this.Category_List);
@@ -197,7 +184,6 @@ namespace Veiw.Forms
         private System.Windows.Forms.ComboBox Category_List;
         private System.Windows.Forms.Button add_note;
         private System.Windows.Forms.Button add_category;
-        private System.Windows.Forms.Button edit_btn;
         private System.Windows.Forms.Panel panel_note;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem программаToolStripMenuItem;

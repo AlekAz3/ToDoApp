@@ -64,6 +64,30 @@ namespace Model
             return categories;
         }
 
+        public List<Category> ArchiveCategoryFromDB()
+        {
+            List<Category> Acategories = new List<Category>();
+
+            string command = $@"SELECT * FROM Category;";
+
+            SQLiteCommand cmd = new SQLiteCommand(command, _connection);
+            SQLiteDataReader sql = cmd.ExecuteReader();
+
+            if (sql.HasRows)
+            {
+                while (sql.Read())
+                {
+                    if (Convert.ToBoolean(sql["COMPLETE"]))
+                    {
+                        Acategories.Add(new Category(
+                            Convert.ToInt32(sql["ID_CATEGORY"]),
+                            sql["NAME_CATEGORY"].ToString()));
+                    }
+                }
+            }
+            return Acategories;
+        }
+
         public void SaveStateCheckBoxToDB(Note note)
         {
             if (_connection.State == System.Data.ConnectionState.Open)
