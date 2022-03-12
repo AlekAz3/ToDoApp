@@ -5,7 +5,7 @@ using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 
-namespace Veiw.Forms
+namespace View.Forms
 {
     public partial class MainForm : Form
     {
@@ -55,7 +55,7 @@ namespace Veiw.Forms
         {
             if (db != null)
             {
-                Category_List_MouseClick(Category_List, null);
+                SaveStateCheckbox();
                 db.CloseDB();
             }
         }
@@ -63,7 +63,6 @@ namespace Veiw.Forms
         public void Category_List_SelectedIndexChanged(object sender, EventArgs e)
         {
             panel_note.Controls.Clear();
-            CurrentCategory = Category_List.SelectedIndex;
             curCategory = Category_List.SelectedItem.ToString();
             checkBoxes.Clear();
             indent = 5;
@@ -73,7 +72,7 @@ namespace Veiw.Forms
                 if (Note[i].Name_Category == curCategory)
                 {
                     checkBoxes.Add(new MyCheckBox(Note[i].Name, Note[i].Complete, indent));
-                    panel_note.Controls.Add(checkBoxes[checkBoxes.Count - 1]);
+                    panel_note.Controls.Add(checkBoxes[checkBoxes.Count-1]);
                     indent += step;
                 }
             }
@@ -81,11 +80,7 @@ namespace Veiw.Forms
 
         public void Category_List_MouseClick(object sender, MouseEventArgs e)
         {
-            for (int i = 0; i < panel_note.Controls.Count; i++)
-            {
-                Note[i].Complete = checkBoxes[i].Checked;
-                db.SaveStateCheckBoxToDB(Note[i]);
-            }
+
         }
 
         private void add_category_Click(object sender, EventArgs e)
@@ -233,11 +228,6 @@ namespace Veiw.Forms
             Application.Exit();
         }
 
-        private void Debug_click(object sender, EventArgs e)
-        {
-            MessageBox.Show("Закрой прогу и открой обратно");
-        }
-
         private void DellCurrentCategory(object sender, EventArgs e)
         {
             if (Category_List.SelectedIndex != -1)
@@ -249,9 +239,6 @@ namespace Veiw.Forms
             }
             else
                 MessageBox.Show("Не выбрана категория", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
-
-
         }
 
         private void CategoryToArchive_Click(object sender, EventArgs e)
@@ -276,7 +263,7 @@ namespace Veiw.Forms
             Note = db.NoteFromDB();
             Category = db.CategoryFromDB();
 
-            for (int index = 0; index < Category.Count; ++index)
+            for (int index = 0; index < Category.Count; index++)
                 Category_List.Items.Add(Category[index].Name);
 
             if (Category_List.Items.Count != 0)
@@ -296,6 +283,26 @@ namespace Veiw.Forms
             }
 
             MessageBox.Show(messege, "Архив");
+        }
+
+        private void SaveStateCheckbox()
+        {
+            int j = 0, k = 0;
+            while (j<Note.Count)
+            {
+                if (Note[j].Name_Category == curCategory)
+                {
+                    Note[j].Complete = checkBoxes[k].Checked;
+                    db.SaveStateCheckBoxToDB(Note[j]);
+                    k++;
+                }
+                j++;
+            }
+        }
+
+        private void Category_List_Click(object sender, EventArgs e)
+        {
+            SaveStateCheckbox();
         }
     }
 }

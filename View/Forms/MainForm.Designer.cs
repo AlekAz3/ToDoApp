@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace Veiw.Forms
+namespace View.Forms
 {
     partial class MainForm
     {
@@ -55,7 +55,7 @@ namespace Veiw.Forms
             this.Category_List.Size = new System.Drawing.Size(171, 28);
             this.Category_List.TabIndex = 0;
             this.Category_List.SelectedIndexChanged += new System.EventHandler(this.Category_List_SelectedIndexChanged);
-            this.Category_List.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Category_List_MouseClick);
+            this.Category_List.Click += new System.EventHandler(this.Category_List_Click);
             // 
             // add_note
             // 
@@ -180,7 +180,7 @@ namespace Veiw.Forms
         }
 
         #endregion
-        
+
         private System.Windows.Forms.ComboBox Category_List;
         private System.Windows.Forms.Button add_note;
         private System.Windows.Forms.Button add_category;

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Text;
 using System.Data.SQLite;
 using System.Collections.Generic;
 
@@ -19,7 +18,7 @@ namespace Model
         {
             List<Note> notes = new List<Note>();
 
-            string command = $@"SELECT * FROM NOTES, Category WHERE NOTES.ID_CATEGORY == Category.ID_CATEGORY";
+            string command = "SELECT \"ID_NOTE\", \"NAME \", CATEGORY.NAME_CATEGORY, CATEGORY.ID_CATEGORY , \"COMPLETE_NOTE\" FROM NOTES, Category WHERE NOTES.ID_CATEGORY == Category.ID_CATEGORY";
 
             SQLiteCommand cmd = new SQLiteCommand(command, _connection);
             SQLiteDataReader sql = cmd.ExecuteReader();
@@ -34,7 +33,7 @@ namespace Model
                             sql["NAME "].ToString(),
                             (sql["NAME_CATEGORY"].ToString()),
                             Convert.ToInt32(sql["ID_CATEGORY"]),
-                            Convert.ToBoolean(sql["COMPLETE "]))) ;
+                            Convert.ToBoolean(sql["COMPLETE_NOTE"]))) ;
                 }
             }
             return notes;
@@ -92,7 +91,7 @@ namespace Model
         {
             if (_connection.State == System.Data.ConnectionState.Open)
             {
-                string commandText = $"UPDATE NOTES SET \"COMPLETE \" = {note.Complete} WHERE ID_NOTE == {note.Id_note}";
+                string commandText = $"UPDATE NOTES SET COMPLETE_NOTE = {note.Complete} WHERE ID_NOTE == {note.Id_note}";
 
                 using (SQLiteCommand cmdCreate = new SQLiteCommand(commandText, _connection))
                     cmdCreate.ExecuteNonQuery();
@@ -109,7 +108,7 @@ namespace Model
 
         public void AddNoteToDB(Note note)
         {
-            string commandText = $"INSERT INTO Notes (ID_CATEGORY, \"NAME \", \"DATE\" , \"COMPLETE \") VALUES(\"{note.Id_Category}\", \"{note.Name}\", \"{DateTime.Now}\", false)";
+            string commandText = $"INSERT INTO Notes (ID_CATEGORY, \"NAME \", \"DATE\" , \"COMPLETE_NOTE\") VALUES(\"{note.Id_Category}\", \"{note.Name}\", \"{DateTime.Now}\", false)";
 
             using (SQLiteCommand cmdCreate = new SQLiteCommand(commandText, _connection))
                 cmdCreate.ExecuteNonQuery();
